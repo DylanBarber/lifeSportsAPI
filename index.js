@@ -37,5 +37,5 @@ MongoClient.connect(uri, {
 
   const port = process.env.PORT || 25565; 
   app.listen(port, (req, res) => {
-    console.log('Listening');
+    console.log(`Listening on ${port}`);
   })
