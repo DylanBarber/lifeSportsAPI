@@ -1,10 +1,10 @@
-name: ESLint Check
+name: ESLintCheck
 
 on: [push]
 
 jobs: 
   build: 
-    name: ESLint Check
+    name: ESLintCheck
     runs-on: macOS-latest
     steps:
       - name: ESLint checks
