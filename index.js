@@ -27,12 +27,12 @@ MongoClient.connect(uri, {
   });
 
   app.get('/', (req, res) => {
-    // const collection = db.collection('notes')
-    // collection.find({}, (err, data) => {
-    //   if (err) return res.status(500).send(err); 
-    //   res.send(data);
-    // })
-    res.send('test received');
+    const collection = db.collection('notes')
+    collection.find({}).toArray((err, data) => {
+      if (err) return res.status(500).send(err); 
+      res.send(data);
+    })
+    // res.send('test received');
   })
 
   const port = process.env.PORT || 25565; 
