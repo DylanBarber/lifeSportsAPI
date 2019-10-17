@@ -1,24 +1,23 @@
-# name: ESLintCheck
+name: Lint
 
-# on: 
-#   push:
+on: pull_request
 
-#     jobs: 
-#       build: 
-#         name: ESLintCheck
-#         runs-on: ubuntu-latest
-#         steps:
-#         - name: ESLint checks
-#           # uses: gimenete/eslint-action@1.0
-#         - npm i eslint
-#         - node_modules/eslint/bin/eslint.js .
-
-workflow "Pull Request" {
-  on = "pull_request"
-  resolves = ["ESLint"]
-}
-
-action "ESLint" {
-  uses = "hallee/eslint-action@master"
-  secrets = ["GITHUB_TOKEN"]
-}
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: rm .yarnclean
+      - run: yarn --frozen-lockfile --ignore-engines --ignore-optional --no-bin-links --non-interactive --silent --ignore-scripts --production=false
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+          HUSKY_SKIP_INSTALL: true
+      - uses: tinovyatkin/action-eslint@v1
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+          check-name: eslint
