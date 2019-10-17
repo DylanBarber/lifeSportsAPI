@@ -36,15 +36,15 @@ app.post("/add", (req, res) => {
   if (req.body === undefined) return res.status(400).send("No insert parameters were supplied");
   collection.insertOne(req.body, (err, data) => {
     if (err) return res.status(500).send(err);
-    res.send(data);
+    res.json(data);
   });
 });
 
 app.get("/", (req, res) => {
   const collection = db.collection("notes");
-  collection.find({}, (err, data) => {
+  collection.find({}).toArray((err, data) => {
     if (err) return res.status(500).send(err);
-    res.send(data);
+    res.json(data);
   });
 });
 
