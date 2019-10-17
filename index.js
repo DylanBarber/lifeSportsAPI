@@ -33,7 +33,7 @@ MongoClient.connect(uri, {
 
 app.post("/add", (req, res) => {
   const collection = db.collection("notes");
-  if (req.body === undefined) return res.status(400).send("No insert parameters were supplied");
+  if (req.body === undefined) return res.status(400).send('No insert parameters were supplied');
   collection.insertOne(req.body, (err, data) => {
     if (err) return res.status(500).send(err);
     res.json(data);

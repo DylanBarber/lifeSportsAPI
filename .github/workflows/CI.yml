@@ -1,14 +1,24 @@
-name: ESLintCheck
+# name: ESLintCheck
 
-on: 
-  push:
+# on: 
+#   push:
 
-    jobs: 
-      build: 
-        name: ESLintCheck
-        runs-on: ubuntu-latest
-        steps:
-        - name: ESLint checks
-          # uses: gimenete/eslint-action@1.0
-        - npm i eslint
-        - node_modules/eslint/bin/eslint.js .
+#     jobs: 
+#       build: 
+#         name: ESLintCheck
+#         runs-on: ubuntu-latest
+#         steps:
+#         - name: ESLint checks
+#           # uses: gimenete/eslint-action@1.0
+#         - npm i eslint
+#         - node_modules/eslint/bin/eslint.js .
+
+workflow "Pull Request" {
+  on = "pull_request"
+  resolves = ["ESLint"]
+}
+
+action "ESLint" {
+  uses = "hallee/eslint-action@master"
+  secrets = ["GITHUB_TOKEN"]
+}
