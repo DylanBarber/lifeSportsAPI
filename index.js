@@ -42,8 +42,6 @@ app.post("/add", (req, res) => {
 
 app.get("/", (req, res) => {
   if (req.body.type === 'users') {
-
-
     const collection = db.collection("notes");
     collection.find({}).toArray((err, data) => {
       if (err) return res.status(500).send(err);
