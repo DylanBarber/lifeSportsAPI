@@ -1,19 +1,11 @@
-# name: ESLintCheck
+name: ESLintCheck
 
-# on: [push]
+on: [push]
 
-# jobs: 
-#   build: 
-#     name: ESLintCheck
-#     runs-on: macOS-latest
-#     steps:
-#       - name: ESLint checks
-#       uses: gimenete/eslint-action@1.0
-workflow "ESLintCheck" {
-  on = "push"
-  resolves = ["ESLint"]
-}
-
-action "ESLint" {
-  uses = "stefanoeb/eslint-action@master"
-}
+jobs: 
+  build: 
+    name: ESLintCheck
+    runs-on: ubuntu-latest
+    steps:
+    - name: ESLint checks
+      uses: gimenete/eslint-action@1.0
