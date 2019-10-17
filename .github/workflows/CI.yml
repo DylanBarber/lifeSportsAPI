@@ -1,2 +1,10 @@
-- name: ESLint checks
-  uses: gimenete/eslint-action@1.0
+name: ESLint Check
+
+on: [push]
+
+jobs: 
+  build: 
+    name: ESLint Check
+    steps:
+      - name: ESLint checks
+      uses: gimenete/eslint-action@1.0
