@@ -5,6 +5,7 @@ on: [push]
 jobs: 
   build: 
     name: ESLint Check
+    runs-on: macOS-latest
     steps:
       - name: ESLint checks
       uses: gimenete/eslint-action@1.0
