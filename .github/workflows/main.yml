@@ -9,6 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Install ESLint
-      uses: "npm i"
+      run: npm i
     - name: RunLint
-      uses: "npm run lint"
+      run: npm run lint
