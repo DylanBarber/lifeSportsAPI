@@ -9,12 +9,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-    - uses: tinovyatkin/action-eslint@v1
-          with:
-            repo-token: ${{secrets.GITHUB_TOKEN}}
-            check-name: eslint
-
-
-
-    
+    - name: Install ESLint
+      run: npm i -g eslint
+    - name: Run ESLint
+      run: eslint index.js
