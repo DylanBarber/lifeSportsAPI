@@ -47,6 +47,12 @@ app.get("/", (req, res) => {
       if (err) return res.status(500).send(err);
       res.json(data);
     });
+  } else if (req.body.type === "exercises") {
+    const collection = db.collection("notes"); 
+    collection.find({}).project({ __id: 1, title: 1 }).toArray((err, data) => {
+      if (err) return res.status(500).send(err); 
+      res.json(data); 
+    });
   }
 });
 
