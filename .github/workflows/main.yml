@@ -11,4 +11,10 @@ jobs:
     - uses: actions/checkout@v1
     - name: Run a one-line script
     - uses: tinovyatkin/action-eslint@v1
+          with:
+            repo-token: ${{secrets.GITHUB_TOKEN}}
+            check-name: eslint
 
+
+
+    
