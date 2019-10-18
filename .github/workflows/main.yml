@@ -11,4 +11,3 @@ jobs:
     - uses: actions/checkout@v1
     - name: Install ESLint
       uses: hallee/eslint-action@master
-      secrets: [a65a8d478327010084a15b647f3dca9f26368054]
