@@ -8,7 +8,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   uri = process.env.ATLAS_URI;
 } else {
   // localhost
