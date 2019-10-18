@@ -1,6 +1,6 @@
 require("dotenv").config();
-const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
+const express = require("express");
+const MongoClient = require("mongodb").MongoClient;
 const bodyParser = require("body-parser");
 const ObjectId = require("mongodb").ObjectId;
 
@@ -8,7 +8,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   uri = process.env.ATLAS_URI;
 } else {
   // localhost
