@@ -58,7 +58,7 @@ app.get("/:id", (req, res) => {
   } else if (req.body.type === "exercises") {
     const collection = db.collection("notes");
     if (req.params.id) {
-      collection.find({ "eid": id })
+      collection.find({ "eid": id });
     } else {
       collection.find({}).project({ __id: 1, title: 1 }).toArray((err, data) => {
         if (err) return res.status(500).send(err);
