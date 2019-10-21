@@ -32,7 +32,7 @@ MongoClient.connect(uri, {
 
 
 app.post("/add", (req, res) => {
-  const collection = db.collection("notes");
+  const collection = db.collection("users");
   if (req.body === undefined) return res.status(400).send("No insert parameters were supplied");
   if (req.body.type = "user") {
     collection.insertOne(req.body, (err, data) => {
@@ -50,13 +50,13 @@ app.post("/add", (req, res) => {
 
 app.get("/:id", (req, res) => {
   if (req.body.type === "users") {
-    const collection = db.collection("notes");
+    const collection = db.collection("users");
     collection.find({}).toArray((err, data) => {
       if (err) return res.status(500).send(err);
       res.json(data);
     });
   } else if (req.body.type === "exercises") {
-    const collection = db.collection("notes");
+    const collection = db.collection("users");
     if (req.params.id) {
       collection.find({ "eid": id });
     } else {
@@ -69,12 +69,38 @@ app.get("/:id", (req, res) => {
 
 });
 
-app.get("/:id", (req, res) => {
+app.delete("/:id", (req, res) => {
   if (req.body.type === "user") {
-    const collection = db.collection("notes");
+    const collection = db.collection("users");
     const uid = new MongoClient.ObjectId(req.params.id);
     collection.remove({ "__id": uid }, (err, data) => {
       if (err) return res.status(500).send(err);
+      res.json(data);
+    });
+  }
+  if (req.body.type === "exercise") {
+    const collection = db.collection("users");
+    const eid = req.params.id; 
+    collection.remove({"eid": eid}, (err, data) => {
+      if (err) return res.status(500).send(err); 
+      res.json(data); 
+    });
+  }
+});
+
+app.post("/update/:id", (req, res) => {
+  if (req.body.type === "user"){ 
+    const collection = db.collection("users"); 
+    const uid = MongoClient.ObjectId(req.params.id); 
+    collection.find({"__id": uid}, (err, data) => {
+      if (err) return res.status(500).send(err); 
+      res.json(data);
+    });
+  } else if (req.body.type === "exercise") {
+    const collection = db.collection("users");
+    const eid = req.params.id;
+    collection.find({"eid": eid}, (err, data) => {
+      if (err) return res.status(500).send(err); 
       res.json(data);
     });
   }
