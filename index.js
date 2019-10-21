@@ -3,6 +3,7 @@ const express = require("express");
 const MongoClient = require("mongodb").MongoClient;
 const bodyParser = require("body-parser");
 const ObjectId = require("mongodb").ObjectId;
+const mongoose = require("mongoose");
 
 const app = express();
 
@@ -32,7 +33,7 @@ MongoClient.connect(uri, {
 
 
 app.post("/add", (req, res) => {
-  const collection = db.collection("users");
+  const collection = db.collection("user");
   if (req.body === undefined) return res.status(400).send("No insert parameters were supplied");
   if (req.body.type = "user") {
     collection.insertOne(req.body, (err, data) => {
@@ -48,19 +49,29 @@ app.post("/add", (req, res) => {
   };
 });
 
-app.get("/:id", (req, res) => {
-  if (req.body.type === "users") {
-    const collection = db.collection("users");
-    collection.find({}).toArray((err, data) => {
-      if (err) return res.status(500).send(err);
-      res.json(data);
-    });
+app.get("/", (req, res) => {
+  if (req.body.type === "user") {
+    if (req.body.id) {
+      const uid = ObjectId(req.body.id);
+      const collection = db.collection("user");
+      collection.find({ "_id": uid }).toArray((err, data) => {
+        if (err) return res.status(500).send(err);
+        return res.json(data);
+      });
+    } else {
+      const collection = db.collection("user");
+      collection.find({}).toArray((err, data) => {
+        if (err) return res.status(500).send(err);
+        res.json(data);
+      });
+    }
+
   } else if (req.body.type === "exercises") {
-    const collection = db.collection("users");
-    if (req.params.id) {
+    const collection = db.collection("user");
+    if (req.body.id) {
       collection.find({ "eid": id });
     } else {
-      collection.find({}).project({ __id: 1, title: 1 }).toArray((err, data) => {
+      collection.find({}).project({ _id: 1, title: 1 }).toArray((err, data) => {
         if (err) return res.status(500).send(err);
         res.json(data);
       });
@@ -71,36 +82,36 @@ app.get("/:id", (req, res) => {
 
 app.delete("/:id", (req, res) => {
   if (req.body.type === "user") {
-    const collection = db.collection("users");
+    const collection = db.collection("user");
     const uid = new MongoClient.ObjectId(req.params.id);
-    collection.remove({ "__id": uid }, (err, data) => {
+    collection.remove({ "_id": uid }, (err, data) => {
       if (err) return res.status(500).send(err);
       res.json(data);
     });
   }
   if (req.body.type === "exercise") {
-    const collection = db.collection("users");
-    const eid = req.params.id; 
-    collection.remove({"eid": eid}, (err, data) => {
-      if (err) return res.status(500).send(err); 
-      res.json(data); 
+    const collection = db.collection("user");
+    const eid = req.params.id;
+    collection.remove({ "eid": eid }, (err, data) => {
+      if (err) return res.status(500).send(err);
+      res.json(data);
     });
   }
 });
 
-app.post("/update/:id", (req, res) => {
-  if (req.body.type === "user"){ 
-    const collection = db.collection("users"); 
-    const uid = MongoClient.ObjectId(req.params.id); 
-    collection.find({"__id": uid}, (err, data) => {
-      if (err) return res.status(500).send(err); 
+app.put("/update/:id", (req, res) => {
+  if (req.body.type === "user") {
+    const collection = db.collection("user");
+    const uid = MongoClient.ObjectId(req.params.id);
+    collection.find({ "_id": uid }, (err, data) => {
+      if (err) return res.status(500).send(err);
       res.json(data);
     });
   } else if (req.body.type === "exercise") {
-    const collection = db.collection("users");
+    const collection = db.collection("user");
     const eid = req.params.id;
-    collection.find({"eid": eid}, (err, data) => {
-      if (err) return res.status(500).send(err); 
+    collection.find({ "eid": eid }, (err, data) => {
+      if (err) return res.status(500).send(err);
       res.json(data);
     });
   }

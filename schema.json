@@ -1,0 +1,30 @@
+{"type": "users",
+  "height": "6'4",
+  "weight": 200,
+  "age": 21, 
+  "sex": "M",
+  "parents": "myself",
+  "contactInfo": "(555)555-5555",
+  "location": "Detroit",
+  "school": "r2h",
+  "incidents": "",
+  "activeStatus": "active",
+  "lastActive": "10/21/19",
+  "attendance": [{
+    "weekOf": "10/21/19",
+    "monday": true,
+    "tuesday": true,
+    "wednesday": true,
+    "thursday": true,
+    "friday": true,
+    "saturday": false,
+    "sunday": false
+  }],
+  "grades": "A",
+  "readingLevel": "A",
+  "booksRead": ["book1", "book2", "book3"],
+  "teachers": [{
+    "teacher": "teacher1",
+    "subject": "subject1"
+  }]
+  }
