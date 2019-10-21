@@ -71,9 +71,9 @@ app.get("/:id", (req, res) => {
     collection.remove({"__id": uid}, (err, data) => {
       if (err) return res.status(500).send(err);
       res.json(data);
-    })
+    });
   }
-})
+});
 
 
 const port = process.env.PORT || 25565;

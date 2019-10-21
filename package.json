@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm i && node index.js",
     "watch": "nodemon index.js",
-    "lint": "eslint index.js"
+    "lint": "eslint index.js",
+    "lintFix": "eslint --fix index.js"
   },
   "keywords": [],
   "author": "",
