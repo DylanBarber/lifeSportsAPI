@@ -48,7 +48,7 @@ app.post("/add", (req, res) => {
   };
 });
 
-app.get("/", (req, res) => {
+app.get("/:id", (req, res) => {
   if (req.body.type === "users") {
     const collection = db.collection("notes");
     collection.find({}).toArray((err, data) => {
@@ -57,18 +57,23 @@ app.get("/", (req, res) => {
     });
   } else if (req.body.type === "exercises") {
     const collection = db.collection("notes");
-    collection.find({}).project({ __id: 1, title: 1 }).toArray((err, data) => {
-      if (err) return res.status(500).send(err);
-      res.json(data);
-    });
+    if (req.params.id) {
+      collection.find({ "eid": id });
+    } else {
+      collection.find({}).project({ __id: 1, title: 1 }).toArray((err, data) => {
+        if (err) return res.status(500).send(err);
+        res.json(data);
+      });
+    }
   }
+
 });
 
 app.get("/:id", (req, res) => {
-  if (req.body.type === "user"){
-    const collection = db.collection("notes"); 
+  if (req.body.type === "user") {
+    const collection = db.collection("notes");
     const uid = new MongoClient.ObjectId(req.params.id);
-    collection.remove({"__id": uid}, (err, data) => {
+    collection.remove({ "__id": uid }, (err, data) => {
       if (err) return res.status(500).send(err);
       res.json(data);
     });
